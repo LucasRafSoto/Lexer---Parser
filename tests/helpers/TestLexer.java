@@ -1,4 +1,4 @@
-package helpers;
+package tests.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +23,9 @@ public class TestLexer implements ILexer {
     public void addToken(Token token) {
         tokens.add(token);
     }
-    
+
     public Token nextToken() {
-        if(index == tokens.size()) {
+        if (index == tokens.size()) {
             return null;
         } else {
             return tokens.get(index++);

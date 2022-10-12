@@ -11,67 +11,64 @@ import tests.ILexer;
  * program
  * Following is the Grammar we are using:
  *
- *  PROGRAM -> 'program' BLOCK ==> program
+ * PROGRAM -> 'program' BLOCK ==> program
  *
- *  BLOCK -> '{' D* S* '}'  ==> block
+ * BLOCK -> '{' D* S* '}' ==> block
  *
- *  D -> TYPE NAME                    ==> decl
- *    -> TYPE NAME FUNHEAD BLOCK      ==> functionDecl
+ * D -> TYPE NAME ==> decl
+ * -> TYPE NAME FUNHEAD BLOCK ==> functionDecl
  *
- *  TYPE  ->  'int'
- *        ->  'boolean'
+ * TYPE -> 'int'
+ * -> 'boolean'
  *
- *  FUNHEAD  -> '(' (D list ',')? ')'  ==> formals
+ * FUNHEAD -> '(' (D list ',')? ')' ==> formals
  *
- *  S -> 'if' E 'then' BLOCK 'else' BLOCK  ==> if
- *    -> 'while' E BLOCK               ==> while
- *    -> 'return' E                    ==> return
- *    -> BLOCK
- *    -> NAME '=' E                    ==> assign
+ * S -> 'if' E 'then' BLOCK 'else' BLOCK ==> if
+ * -> 'while' E BLOCK ==> while
+ * -> 'return' E ==> return
+ * -> BLOCK
+ * -> NAME '=' E ==> assign
  *
- *  E -> SE
- *    -> SE '==' SE   ==> =
- *    -> SE '!=' SE   ==> !=
- *    -> SE '<'  SE   ==> <
- *    -> SE '<=' SE   ==> <=
+ * E -> SE
+ * -> SE '==' SE ==> =
+ * -> SE '!=' SE ==> !=
+ * -> SE '<' SE ==> <
+ * -> SE '<=' SE ==> <=
  *
- *  SE  ->  T
- *      ->  SE '+' T  ==> +
- *      ->  SE '-' T  ==> -
- *      ->  SE '|' T  ==> or
+ * SE -> T
+ * -> SE '+' T ==> +
+ * -> SE '-' T ==> -
+ * -> SE '|' T ==> or
  *
- *  T  -> F
- *     -> T '*' F  ==> *
- *     -> T '/' F  ==> /
- *     -> T '&' F  ==> and
+ * T -> F
+ * -> T '*' F ==> *
+ * -> T '/' F ==> /
+ * -> T '&' F ==> and
  *
- *  F  -> '(' E ')'
- *     -> NAME
- *     -> <int>
- *     -> NAME '(' (E list ',')? ')' ==> call
+ * F -> '(' E ')'
+ * -> NAME
+ * -> <int>
+ * -> NAME '(' (E list ',')? ')' ==> call
  *
- *  NAME  -> <id>
+ * NAME -> <id>
  */
 public class Parser {
 
   private Token currentToken;
   private ILexer lex;
   private EnumSet<Tokens> relationalOps = EnumSet.of(
-    Tokens.Equal,
-    Tokens.NotEqual,
-    Tokens.Less,
-    Tokens.LessEqual
-  );
+      Tokens.Equal,
+      Tokens.NotEqual,
+      Tokens.Less,
+      Tokens.LessEqual);
   private EnumSet<Tokens> addingOps = EnumSet.of(
-    Tokens.Plus,
-    Tokens.Minus,
-    Tokens.Or
-  );
+      Tokens.Plus,
+      Tokens.Minus,
+      Tokens.Or);
   private EnumSet<Tokens> multiplyingOps = EnumSet.of(
-    Tokens.Multiply,
-    Tokens.Divide,
-    Tokens.And
-  );
+      Tokens.Multiply,
+      Tokens.Divide,
+      Tokens.And);
 
   /**
    * Construct a new Parser;
@@ -97,7 +94,7 @@ public class Parser {
   }
 
   public Lexer getLex() {
-    return (Lexer)lex;
+    return (Lexer) lex;
   }
 
   /**
@@ -131,11 +128,11 @@ public class Parser {
   }
 
   /**
-   * block -> '{' d* s* '}'       ==> block
+   * block -> '{' d* s* '}' ==> block
    *
    * @return block tree
    * @exception SyntaxError - thrown for any syntax error e.g. an expected
-   * left brace isn't found
+   *                        left brace isn't found
    */
   public AST rBlock() throws SyntaxError {
     expect(Tokens.LeftBrace);
@@ -161,17 +158,15 @@ public class Parser {
   }
 
   boolean startingStatement() {
-    return (
-      isNextTok(Tokens.If) ||
-      isNextTok(Tokens.While) ||
-      isNextTok(Tokens.Return) ||
-      isNextTok(Tokens.LeftBrace) ||
-      isNextTok(Tokens.Identifier)
-    );
+    return (isNextTok(Tokens.If) ||
+        isNextTok(Tokens.While) ||
+        isNextTok(Tokens.Return) ||
+        isNextTok(Tokens.LeftBrace) ||
+        isNextTok(Tokens.Identifier));
   }
 
   /**
-   * d -> type name                ==> decl
+   * d -> type name ==> decl
    * d -> type name funcHead block ==> functionDecl
    *
    * @return either the decl tree or the functionDecl tree
@@ -245,11 +240,11 @@ public class Parser {
   }
 
   /**
-   * S -> 'if' e 'then' block 'else' block  ==> if
-   *   -> 'while' e block                   ==> while
-   *   -> 'return' e                        ==> return
-   *   -> block                             ==> block
-   *   -> name '=' e                        ==> assign
+   * S -> 'if' e 'then' block 'else' block ==> if
+   * -> 'while' e block ==> while
+   * -> 'return' e ==> return
+   * -> block ==> block
+   * -> name '=' e ==> assign
    *
    * @return the tree corresponding to the statement found
    * @exception SyntaxError - thrown for any syntax error
@@ -300,10 +295,10 @@ public class Parser {
 
   /**
    * e -> se
-   *   -> se '==' se ==> =
-   *   -> se '!=' se ==> !=
-   *   -> se '<' se  ==> <
-   *   -> se '<=' se ==> <=
+   * -> se '==' se ==> =
+   * -> se '!=' se ==> !=
+   * -> se '<' se ==> <
+   * -> se '<=' se ==> <=
    *
    * @return the tree corresponding to the expression
    * @exception SyntaxError - thrown for any syntax error
@@ -324,9 +319,9 @@ public class Parser {
 
   /**
    * se -> t
-   *    -> se '+' t ==> +
-   *    -> se '-' t ==> -
-   *    -> se '|' t ==> or
+   * -> se '+' t ==> +
+   * -> se '-' t ==> -
+   * -> se '|' t ==> or
    *
    * This rule indicates we should pick up as many <i>t</i>'s as
    * possible; the <i>t</i>'s will be left associative
@@ -349,9 +344,9 @@ public class Parser {
 
   /**
    * t -> f
-   *   -> t '*' f ==> *
-   *   -> t '/' f ==> /
-   *   -> t '&' f ==> and
+   * -> t '*' f ==> *
+   * -> t '/' f ==> /
+   * -> t '&' f ==> and
    *
    * This rule indicates we should pick up as many <i>f</i>'s as
    * possible; the <i>f</i>'s will be left associative
@@ -374,9 +369,9 @@ public class Parser {
 
   /**
    * f -> '(' e ')'
-   *   -> name
-   *   -> <int>
-   *   -> name '(' (e list ',')? ')'     ==> call
+   * -> name
+   * -> <int>
+   * -> name '(' (e list ',')? ')' ==> call
    *
    * @return the tree corresponding to the factor expression
    * @exception SyntaxError - thrown for any syntax error
@@ -399,7 +394,7 @@ public class Parser {
     }
 
     t = rName();
-    //  -> name (not a function call)
+    // -> name (not a function call)
     if (!isNextTok(Tokens.LeftParen)) {
       return t;
     }
@@ -490,8 +485,9 @@ public class Parser {
       scan();
 
       return;
+    } else {
+      throw new SyntaxError(currentToken, kind);
     }
-    throw new SyntaxError(currentToken, kind);
   }
 
   private void scan() {
@@ -515,9 +511,9 @@ class SyntaxError extends Exception {
   /**
    * record the syntax error just encountered
    *
-   * @param tokenFound is the token just found by the parser
+   * @param tokenFound   is the token just found by the parser
    * @param kindExpected is the token we expected to find based on the current
-   * context
+   *                     context
    */
   public SyntaxError(Token tokenFound, Tokens kindExpected) {
     this.tokenFound = tokenFound;
@@ -531,6 +527,6 @@ class SyntaxError extends Exception {
 
   @Override
   public String toString() {
-      return String.format("Expected [%s], found [%s]", kindExpected, tokenFound);
+    return String.format("Expected [%s], found [%s]", kindExpected, tokenFound);
   }
 }
