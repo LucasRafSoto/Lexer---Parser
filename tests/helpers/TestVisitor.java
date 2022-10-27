@@ -2,7 +2,7 @@ package tests.helpers;
 
 import java.util.List;
 
-import ast.AST;
+import ast.*;
 import visitor.ASTVisitor;
 
 public class TestVisitor extends ASTVisitor {
@@ -22,10 +22,30 @@ public class TestVisitor extends ASTVisitor {
             return testKids(t);
         } catch (ClassCastException exception) {
             return String.format(
-                "Expected [%s] but got [%s]", 
-                expected.get(index).getClass().getSimpleName(),
-                t.getClass().getSimpleName()
-            );
+                    "Expected [%s] but got [%s]",
+                    expected.get(index).getClass().getSimpleName(),
+                    t.getClass().getSimpleName());
+        }
+    }
+
+    private Object test(AST t, String expectedSymbol, String actualSymbol) {
+        try {
+            expected.get(index).getClass().cast(t);
+
+            if (!expectedSymbol.equals(actualSymbol)) {
+                throw new Exception(
+                        String.format("Expected [%s] but got [%s]", expectedSymbol, actualSymbol));
+            }
+
+            index++;
+            return testKids(t);
+        } catch (ClassCastException exception) {
+            return String.format(
+                    "Expected [%s] but got [%s]",
+                    expected.get(index).getClass().getSimpleName(),
+                    t.getClass().getSimpleName());
+        } catch (Exception exception) {
+            return exception.getMessage();
         }
     }
 
@@ -33,7 +53,7 @@ public class TestVisitor extends ASTVisitor {
         for (AST kid : t.getKids()) {
             Object result = kid.accept(this);
 
-            if(result != null) {
+            if (result != null) {
                 return result;
             }
         }
@@ -108,29 +128,44 @@ public class TestVisitor extends ASTVisitor {
 
     @Override
     public Object visitIntTree(AST t) {
-        return test(t);
+        String actualSymbol = ((IntTree) t).getSymbol().toString();
+        String expectedSymbol = ((IntTree) expected.get(index)).getSymbol().toString();
+
+        return test(t, expectedSymbol, actualSymbol);
     }
 
     @Override
     public Object visitIdTree(AST t) {
-        return test(t);
+        String actualSymbol = ((IdTree) t).getSymbol().toString();
+        String expectedSymbol = ((IdTree) expected.get(index)).getSymbol().toString();
+
+        return test(t, expectedSymbol, actualSymbol);
     }
 
     @Override
     public Object visitRelOpTree(AST t) {
-        return test(t);
+        String actualSymbol = ((RelOpTree) t).getSymbol().toString();
+        String expectedSymbol = ((RelOpTree) expected.get(index)).getSymbol().toString();
+
+        return test(t, expectedSymbol, actualSymbol);
     }
 
     @Override
     public Object visitAddOpTree(AST t) {
-        return test(t);
+        String actualSymbol = ((AddOpTree) t).getSymbol().toString();
+        String expectedSymbol = ((AddOpTree) expected.get(index)).getSymbol().toString();
+
+        return test(t, expectedSymbol, actualSymbol);
     }
 
     @Override
     public Object visitMultOpTree(AST t) {
-        return test(t);
+        String actualSymbol = ((MultOpTree) t).getSymbol().toString();
+        String expectedSymbol = ((MultOpTree) expected.get(index)).getSymbol().toString();
+
+        return test(t, expectedSymbol, actualSymbol);
     }
- 
+
     @Override
     public Object visitScientificTypeTree(AST t) {
         return test(t);
@@ -143,12 +178,22 @@ public class TestVisitor extends ASTVisitor {
 
     @Override
     public Object visitScientificTree(AST t) {
-        return test(t);
+        String actualSymbol = ((ScientificTree) t).getSymbol().toString();
+        String expectedSymbol = ((ScientificTree) expected.get(index)).getSymbol().toString();
+
+        return test(t, expectedSymbol, actualSymbol);
     }
 
-    @Override 
+    @Override
     public Object visitStringTree(AST t) {
-        return test(t);
+        String actualSymbol = ((StringTree) t).getSymbol().toString();
+        String expectedSymbol = ((StringTree) expected.get(index)).getSymbol().toString();
+
+        // Just in case people left quotes on
+        return test(
+                t,
+                expectedSymbol.replace("\"", ""),
+                actualSymbol.replace("\"", ""));
     }
 
     @Override

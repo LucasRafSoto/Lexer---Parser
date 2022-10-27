@@ -39,9 +39,10 @@ public class DrawVisitor extends ASTVisitor {
   private int max(int[] array) {
     int max = array[0];
 
-    for (int i = 1; i < array.length; i++) if (max < array[i]) {
-      max = array[i];
-    }
+    for (int i = 1; i < array.length; i++)
+      if (max < array[i]) {
+        max = array[i];
+      }
 
     return max;
   }
@@ -65,16 +66,17 @@ public class DrawVisitor extends ASTVisitor {
     g2.setColor(Color.black);
 
     for (int i = 0; i < t.kidCount(); i++) {
-      endx =
-        width /
-        2 +
-        (progress[depth + 1] + i) *
-        hstep -
-        nCount[depth + 1] *
-        hstep /
-        2 +
-        nodew /
-        2;
+      endx = width /
+          2 +
+          (progress[depth + 1] + i) *
+              hstep
+          -
+          nCount[depth + 1] *
+              hstep /
+              2
+          +
+          nodew /
+              2;
       endy = (depth + 1) * vstep;
       g2.drawLine(startx, starty, endx, endy);
     }
@@ -95,9 +97,8 @@ public class DrawVisitor extends ASTVisitor {
     g2 = bimg.createGraphics();
     g2.setBackground(Color.WHITE);
     g2.setRenderingHint(
-      RenderingHints.KEY_RENDERING,
-      RenderingHints.VALUE_RENDER_QUALITY
-    );
+        RenderingHints.KEY_RENDERING,
+        RenderingHints.VALUE_RENDER_QUALITY);
     g2.clearRect(0, 0, w, h);
 
     return g2;
@@ -194,6 +195,36 @@ public class DrawVisitor extends ASTVisitor {
 
   public Object visitMultOpTree(AST t) {
     draw("MultOp: " + ((MultOpTree) t).getSymbol().toString(), t);
+    return null;
+  }
+
+  public Object visitStringTypeTree(AST t) {
+    draw("StringType", t);
+    return null;
+  }
+
+  public Object visitScientificTypeTree(AST t) {
+    draw("StringType", t);
+    return null;
+  }
+
+  public Object visitStringTree(AST t) {
+    draw("String: " + ((StringTree) t).getSymbol(), t);
+    return null;
+  }
+
+  public Object visitScientificTree(AST t) {
+    draw("Scientific: " + ((ScientificTree) t).getSymbol(), t);
+    return null;
+  }
+
+  public Object visitForAllTree(AST t) {
+    draw("ForAll: ", t);
+    return null;
+  }
+
+  public Object visitRangeExpTree(AST t) {
+    draw("RangeExp: ", t);
     return null;
   }
 }

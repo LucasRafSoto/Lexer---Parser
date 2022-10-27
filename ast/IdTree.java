@@ -11,10 +11,14 @@ public class IdTree extends AST {
   private int frameOffset = -1;
 
   /**
-   *  @param token - record the symbol from the token Symbol
+   * @param token - record the symbol from the token Symbol
    */
   public IdTree(Token token) {
-    this.symbol = token.getSymbol();
+    try {
+      this.symbol = token.getSymbol();
+    } catch (NullPointerException e) {
+      System.exit(0);
+    }
   }
 
   public Object accept(ASTVisitor visitor) {
@@ -26,14 +30,15 @@ public class IdTree extends AST {
   }
 
   /**
-   *  @param offset is the offset for this variable as determined by the code generator
+   * @param offset is the offset for this variable as determined by the code
+   *               generator
    */
   public void setFrameOffset(int offset) {
     frameOffset = offset;
   }
 
   /**
-   *  @return the frame offset for this variable - used by codegen
+   * @return the frame offset for this variable - used by codegen
    */
   public int getFrameOffset() {
     return frameOffset;

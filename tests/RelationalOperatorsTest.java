@@ -36,34 +36,31 @@ public class RelationalOperatorsTest {
 
     private static Stream<Arguments> provideRelationalTokenPrograms() throws Exception {
         return Stream.of(
-            Arguments.of(lexerForRelop("=="), expectedAstForRelop("!=")),
-            Arguments.of(lexerForRelop("=="), expectedAstForRelop("!=")),
-            Arguments.of(lexerForRelop("<"), expectedAstForRelop("<")),
-            Arguments.of(lexerForRelop("<="), expectedAstForRelop("<=")),
-            Arguments.of(lexerForRelop(">"), expectedAstForRelop(">")),
-            Arguments.of(lexerForRelop(">="), expectedAstForRelop(">="))
-        );
+                Arguments.of(lexerForRelop("=="), expectedAstForRelop("==")),
+                Arguments.of(lexerForRelop("!="), expectedAstForRelop("!=")),
+                Arguments.of(lexerForRelop("<"), expectedAstForRelop("<")),
+                Arguments.of(lexerForRelop("<="), expectedAstForRelop("<=")),
+                Arguments.of(lexerForRelop(">"), expectedAstForRelop(">")),
+                Arguments.of(lexerForRelop(">="), expectedAstForRelop(">=")));
     }
 
     private static ILexer lexerForRelop(String relop) throws Exception {
         return Helpers.lexerFromPseudoProgram(
-            String.format("""
-                    program { 
-                        return <int> %s <int>
-                    }
-                    """, relop)
-        );
+                String.format("""
+                        program {
+                            return <int> %s <int>
+                        }
+                        """, relop));
 
     }
 
     private static List<AST> expectedAstForRelop(String relop) {
         return Arrays.asList(
-            new ProgramTree(),
-            new BlockTree(),
-            new ReturnTree(),
-            new RelOpTree(Helpers.tt(relop)),
-            new IntTree(Helpers.tt("<int>")),
-            new IntTree(Helpers.tt("<int>"))
-        );
+                new ProgramTree(),
+                new BlockTree(),
+                new ReturnTree(),
+                new RelOpTree(Helpers.tt(relop)),
+                new IntTree(Helpers.tt("<int>")),
+                new IntTree(Helpers.tt("<int>")));
     }
 }

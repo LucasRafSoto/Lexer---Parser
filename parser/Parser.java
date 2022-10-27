@@ -60,7 +60,9 @@ public class Parser {
       Tokens.Equal,
       Tokens.NotEqual,
       Tokens.Less,
-      Tokens.LessEqual);
+      Tokens.LessEqual,
+      Tokens.Greater,
+      Tokens.GreaterEqual);
   private EnumSet<Tokens> addingOps = EnumSet.of(
       Tokens.Plus,
       Tokens.Minus,
@@ -123,6 +125,7 @@ public class Parser {
     // principle of substitutability to indicate it returns an AST
     AST t = new ProgramTree();
     expect(Tokens.Program);
+
     t.addKid(rBlock());
     return t;
   }
@@ -139,6 +142,7 @@ public class Parser {
     AST t = new BlockTree();
 
     // Get declarations until there are no more matches for declarations
+
     while (startingDecl()) {
       t.addKid(rDecl());
     }
@@ -154,7 +158,8 @@ public class Parser {
   }
 
   boolean startingDecl() {
-    return isNextTok(Tokens.Int) || isNextTok(Tokens.BOOLean);
+    return isNextTok(Tokens.Int) || isNextTok(Tokens.BOOLean) || isNextTok(Tokens.StringType)
+        || isNextTok(Tokens.Scientific);
   }
 
   boolean startingStatement() {
@@ -162,7 +167,8 @@ public class Parser {
         isNextTok(Tokens.While) ||
         isNextTok(Tokens.Return) ||
         isNextTok(Tokens.LeftBrace) ||
-        isNextTok(Tokens.Identifier));
+        isNextTok(Tokens.Identifier) ||
+        isNextTok(Tokens.Forall));
   }
 
   /**
@@ -202,6 +208,12 @@ public class Parser {
 
     if (isNextTok(Tokens.Int)) {
       t = new IntTypeTree();
+      scan();
+    } else if (isNextTok(Tokens.StringType)) {
+      t = new StringTypeTree();
+      scan();
+    } else if (isNextTok(Tokens.Scientific)) {
+      t = new ScientificTypeTree();
       scan();
     } else {
       expect(Tokens.BOOLean);
@@ -261,14 +273,26 @@ public class Parser {
       expect(Tokens.Then);
       t.addKid(rBlock());
 
-      expect(Tokens.Else);
-      t.addKid(rBlock());
+      if (isNextTok(Tokens.Else)) {
+        expect(Tokens.Else);
+        t.addKid(rBlock());
+      }
       return t;
     } else if (isNextTok(Tokens.While)) {
       scan();
       t = new WhileTree();
 
       t.addKid(rExpr());
+      t.addKid(rBlock());
+
+      return t;
+    } else if (isNextTok(Tokens.Forall)) {
+      scan();
+      t = new ForAllTree();
+
+      t.addKid(rDecl());
+      expect(Tokens.In);
+      t.addKid(rRangeExpression());
       t.addKid(rBlock());
 
       return t;
@@ -313,6 +337,24 @@ public class Parser {
 
     t.addKid(kid);
     t.addKid(rSimpleExpr());
+
+    return t;
+  }
+
+  public AST rRangeExpression() throws SyntaxError {
+    AST t;
+    t = new RangeExpTree();
+    AST t1, t2;
+
+    expect(Tokens.LeftBracket);
+    t1 = new IntTree(currentToken);
+    scan();
+    expect(Tokens.Range);
+    t2 = new IntTree(currentToken);
+    scan();
+    expect(Tokens.RightBracket);
+    t.addKid(t1);
+    t.addKid(t2);
 
     return t;
   }
@@ -389,6 +431,14 @@ public class Parser {
     // -> <int>
     else if (isNextTok(Tokens.INTeger)) {
       t = new IntTree(currentToken);
+      scan();
+      return t;
+    } else if (isNextTok(Tokens.StringLit)) {
+      t = new StringTree(currentToken);
+      scan();
+      return t;
+    } else if (isNextTok(Tokens.ScientificLit)) {
+      t = new ScientificTree(currentToken);
       scan();
       return t;
     }

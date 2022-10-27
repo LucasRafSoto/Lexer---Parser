@@ -3,15 +3,15 @@ package visitor;
 import ast.*;
 
 /**
- *  PrintVisitor is used to visit an AST and print it using
- *  appropriate indentation:
- *  1. root
- *  2.   Kid1
- *  3.   Kid2
- *  4.     Kid21
- *  5.     Kid22
- *  6.     Kid23
- *  7.   Kid3
+ * PrintVisitor is used to visit an AST and print it using
+ * appropriate indentation:
+ * 1. root
+ * 2. Kid1
+ * 3. Kid2
+ * 4. Kid21
+ * 5. Kid22
+ * 6. Kid23
+ * 7. Kid3
  */
 public class PrintVisitor extends ASTVisitor {
 
@@ -28,11 +28,12 @@ public class PrintVisitor extends ASTVisitor {
   }
 
   /**
-   *  Print the tree
-   *  @param s is the String for the root of t
-   *  @param t is the tree to print - print the information
-   *  in the node at the root (e.g. decoration) and its kids
-   *  indented appropriately
+   * Print the tree
+   * 
+   * @param s is the String for the root of t
+   * @param t is the tree to print - print the information
+   *          in the node at the root (e.g. decoration) and its kids
+   *          indented appropriately
    */
   public void print(String s, AST t) {
     // assume less than 1000 nodes; no problem for csc 413
@@ -41,8 +42,10 @@ public class PrintVisitor extends ASTVisitor {
     int decNum = (decoration == null) ? -1 : decoration.getNodeNum();
     String spaces = "";
 
-    if (num < 100) spaces += " ";
-    if (num < 10) spaces += " ";
+    if (num < 100)
+      spaces += " ";
+    if (num < 10)
+      spaces += " ";
 
     System.out.print(num + ":" + spaces);
     printSpaces(indent);
@@ -106,6 +109,16 @@ public class PrintVisitor extends ASTVisitor {
     return null;
   }
 
+  public Object visitStringTypeTree(AST t) {
+    print("StringType", t);
+    return null;
+  }
+
+  public Object visitScientificTypeTree(AST t) {
+    print("ScientificType", t);
+    return null;
+  }
+
   public Object visitFormalsTree(AST t) {
     print("Formals", t);
     return null;
@@ -141,6 +154,16 @@ public class PrintVisitor extends ASTVisitor {
     return null;
   }
 
+  public Object visitStringTree(AST t) {
+    print("String: " + ((StringTree) t).getSymbol(), t);
+    return null;
+  }
+
+  public Object visitScientificTree(AST t) {
+    print("Scientific: " + ((ScientificTree) t).getSymbol(), t);
+    return null;
+  }
+
   public Object visitIdTree(AST t) {
     print("Id: " + ((IdTree) t).getSymbol().toString(), t);
     return null;
@@ -158,6 +181,16 @@ public class PrintVisitor extends ASTVisitor {
 
   public Object visitMultOpTree(AST t) {
     print("MultOp: " + ((MultOpTree) t).getSymbol().toString(), t);
+    return null;
+  }
+
+  public Object visitForAllTree(AST t) {
+    print("ForAll", t);
+    return null;
+  }
+
+  public Object visitRangeExpTree(AST t) {
+    print("Range", t);
     return null;
   }
 }
