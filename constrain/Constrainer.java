@@ -48,7 +48,8 @@ public class Constrainer extends ASTVisitor {
      * functions, etc.
      */
     public static AST readTree, writeTree, intTree, boolTree,
-            falseTree, trueTree, readId, writeId;
+            falseTree, trueTree, readId, writeId, stringTree,
+            scientificTree;
 
     public Constrainer(AST t, Parser parser) {
         this.t = t;
@@ -310,6 +311,16 @@ public class Constrainer extends ASTVisitor {
         return intTree;
     }
 
+    public Object visitStringTree(AST t) {
+        decorate(t, stringTree);
+        return stringTree;
+    }
+
+    public Object visitScientificTree(AST t) {
+        decorate(t, scientificTree);
+        return scientificTree;
+    }
+
     public Object visitIdTree(AST t) {
         AST decl = lookup(t);
         decorate(t, decl);
@@ -352,6 +363,14 @@ public class Constrainer extends ASTVisitor {
         return null;
     }
 
+    public Object visitStringTypeTree(AST t) {
+        return null;
+    }
+
+    public Object visitScientificTypeTree(AST t) {
+        return null;
+    }
+
     public Object visitBoolTypeTree(AST t) {
         return null;
     }
@@ -364,12 +383,24 @@ public class Constrainer extends ASTVisitor {
         return null;
     }
 
+    public Object visitForallTree(AST t) {
+        return null;
+    }
+
     void constraintError(ConstrainerErrors err) {
         PrintVisitor v1 = new PrintVisitor();
         v1.visitProgramTree(t);
         System.out.println("****CONSTRAINER ERROR: " + err + "   ****");
         System.exit(1);
         return;
+    }
+
+    public Object visitForAllTree(AST t) {
+        return null;
+    }
+
+    public Object visitRangeExpTree(AST t) {
+        return null;
     }
 
 }

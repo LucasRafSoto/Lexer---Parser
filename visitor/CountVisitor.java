@@ -115,6 +115,16 @@ public class CountVisitor extends ASTVisitor {
     return null;
   }
 
+  public Object visitStringTree(AST t) {
+    count(t);
+    return null;
+  }
+
+  public Object visitScientificTree(AST t) {
+    count(t);
+    return null;
+  }
+
   public Object visitFloatTree(AST t) {
     count(t);
     return null;
@@ -136,6 +146,26 @@ public class CountVisitor extends ASTVisitor {
   }
 
   public Object visitMultOpTree(AST t) {
+    count(t);
+    return null;
+  }
+
+  public Object visitStringTypeTree(AST t) {
+    count(t);
+    return null;
+  }
+
+  public Object visitScientificTypeTree(AST t) {
+    count(t);
+    return null;
+  }
+
+  public Object visitForAllTree(AST t) {
+    count(t);
+    return null;
+  }
+
+  public Object visitRangeExpTree(AST t) {
     count(t);
     return null;
   }

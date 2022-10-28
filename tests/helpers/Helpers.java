@@ -53,7 +53,7 @@ public class Helpers {
         testTokens.put("int", new Token(0, 0, Symbol.symbol("int", Tokens.Int), 0));
         testTokens.put("<int>", new Token(0, 0, Symbol.symbol("42", Tokens.INTeger), 0));
         testTokens.put("boolean", new Token(0, 0, Symbol.symbol("boolean", Tokens.BOOLean), 0));
-        testTokens.put("<boolean>", new Token(0, 0, Symbol.symbol("0", Tokens.INTeger), 0));
+        testTokens.put("<boolean>", new Token(0, 0, Symbol.symbol("42", Tokens.INTeger), 0));
         testTokens.put("string", new Token(0, 0, Symbol.symbol("string", Tokens.StringType), 0));
         testTokens.put("<string>", new Token(0, 0, Symbol.symbol("This is a string", Tokens.StringLit), 0));
         testTokens.put("scientific", new Token(0, 0, Symbol.symbol("scientific", Tokens.Scientific), 0));
@@ -70,13 +70,13 @@ public class Helpers {
     private static HashMap<String, AST> treeMappings = new HashMap<>();
     static {
         treeMappings.put("int", new IntTypeTree());
-        treeMappings.put("<int>", new IntTree(Helpers.tt("int")));
+        treeMappings.put("<int>", new IntTree(Helpers.tt("<int>")));
         treeMappings.put("boolean", new BoolTypeTree());
-        treeMappings.put("<boolean>", new IntTree(Helpers.tt("int")));
+        treeMappings.put("<boolean>", new IntTree(Helpers.tt("<int>")));
         treeMappings.put("string", new StringTypeTree());
-        treeMappings.put("<string>", new StringTree(Helpers.tt("string")));
+        treeMappings.put("<string>", new StringTree(Helpers.tt("<string>")));
         treeMappings.put("scientific", new ScientificTypeTree());
-        treeMappings.put("<scientific>", new ScientificTree(Helpers.tt("scientific")));
+        treeMappings.put("<scientific>", new ScientificTree(Helpers.tt("<scientific>")));
 
     }
 

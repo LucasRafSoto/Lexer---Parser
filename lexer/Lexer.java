@@ -62,11 +62,15 @@ public class Lexer implements ILexer {
      * @return the Token; either an id or one for the reserved words
      */
     public Token newIdToken(String id, int startPosition, int endPosition, int lineNumber) {
-        return new Token(
-                startPosition,
-                endPosition,
-                Symbol.symbol(id, Tokens.Identifier),
-                source.getLineno());
+        try {
+            return new Token(
+                    startPosition,
+                    endPosition,
+                    Symbol.symbol(id, Tokens.Identifier),
+                    source.getLineno());
+        } catch (Exception e) {
+            return nextToken();
+        }
     }
 
     // All possible reserved tokens below
@@ -358,26 +362,14 @@ public class Lexer implements ILexer {
 
     public static void main(String args[]) {
         Token token;
-        String printFile = "";
 
         try {
             Lexer lex = new Lexer(args[0]);
-            // Lexer lex = new Lexer("sample_files/simple.x");
             lineNumber = lex.source.getLineno();
-
-            while (true) {
-                token = lex.nextToken();
-
-                System.out.println(token.print());
-                printFile = lex.source.getSourceFile();
-
-            }
+            token = lex.nextToken();
         } catch (FileNotFoundException e) {
             System.out.println("> java lexer.Lexer ");
             System.out.println("usage: java lexer.Lexer filename.x");
-        } catch (NullPointerException e) {
-            System.out.println(printFile);
-            System.out.println("\n_____End Of File_____\n");
         } catch (Exception e) {
             System.out.println(e);
             System.out.println("File Error");

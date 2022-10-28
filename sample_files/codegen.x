@@ -4,6 +4,7 @@ program { int i int j
     return i + j + k  + 2 
    }
 int m   
+j = 2
 m = f(3)   
 i = write(j+m)
 }                   

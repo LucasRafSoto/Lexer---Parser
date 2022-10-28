@@ -3,14 +3,14 @@ package visitor;
 import ast.*;
 
 /**
- *  ASTVisitor class is the root of the Visitor hierarchy for visiting
- *  various AST's; each visitor asks each node in the AST it is given
- *  to <i>accept</i> its visit;
- *  each subclass <b>must</b> provide all of the visitors mentioned
- *  in this class;
- *  after visiting a tree the visitor can return any Object of interest<br>
- *  e.g. when the constrainer visits an expression tree it will return
- *  a reference to the type tree representing the type of the expression
+ * ASTVisitor class is the root of the Visitor hierarchy for visiting
+ * various AST's; each visitor asks each node in the AST it is given
+ * to <i>accept</i> its visit;
+ * each subclass <b>must</b> provide all of the visitors mentioned
+ * in this class;
+ * after visiting a tree the visitor can return any Object of interest<br>
+ * e.g. when the constrainer visits an expression tree it will return
+ * a reference to the type tree representing the type of the expression
  */
 public abstract class ASTVisitor {
 
@@ -57,4 +57,16 @@ public abstract class ASTVisitor {
   public abstract Object visitAddOpTree(AST t);
 
   public abstract Object visitMultOpTree(AST t);
+
+  public abstract Object visitStringTypeTree(AST t);
+
+  public abstract Object visitScientificTypeTree(AST t);
+
+  public abstract Object visitScientificTree(AST t);
+
+  public abstract Object visitStringTree(AST t);
+
+  public abstract Object visitForAllTree(AST t);
+
+  public abstract Object visitRangeExpTree(AST t);
 }
