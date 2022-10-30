@@ -28,11 +28,11 @@ public class Compiler {
 
   public void compileProgram() {
     try {
-      System.out.println("---------------TOKENS-------------");
+      // System.out.println("---------------TOKENS-------------");
       Parser parser = new Parser(sourceFile);
       AST t = parser.execute();
 
-      System.out.println("---------------AST-------------");
+      System.out.println("\n---------------AST-------------");
       PrintVisitor pv = new PrintVisitor();
       t.accept(pv);
       /* COMMENT CODE FROM HERE UNTIL THE CATCH CLAUSE WHEN TESTING PARSER */
@@ -71,21 +71,25 @@ public class Compiler {
       Parser parser = new Parser(sourceFile);
       AST ast = parser.execute();
 
-      System.out.println(parser.getLex());
-
-      System.out.println("---------------AST-------------");
+      System.out.println("\n---------------AST-------------");
       PrintVisitor printVisitor = new PrintVisitor();
       ast.accept(printVisitor);
 
       CountVisitor countVisitor = new CountVisitor();
       ast.accept(countVisitor);
 
-      DrawVisitor drawVisitor = new DrawVisitor(countVisitor.getCount());
-      ast.accept(drawVisitor);
+      OffsetVisitor offsetVisitor = new OffsetVisitor();
+      ast.accept(offsetVisitor);
+
+      DrawOffsetVisitor drawOffsetVisitor = new DrawOffsetVisitor(offsetVisitor);
+      ast.accept(drawOffsetVisitor);
+
+      // DrawVisitor drawVisitor = new DrawVisitor(countVisitor.getCount());
+      // ast.accept(drawVisitor);
 
       try {
         File imagefile = new File(sourceFile + ".png");
-        ImageIO.write(drawVisitor.getImage(), "png", imagefile);
+        ImageIO.write(drawOffsetVisitor.getImage(), "png", imagefile);
       } catch (Exception e) {
         System.out.println("Error in saving image: " + e.getMessage());
       }
@@ -100,13 +104,13 @@ public class Compiler {
             }
           });
 
-      JLabel imagelabel = new JLabel(new ImageIcon(drawVisitor.getImage()));
+      JLabel imagelabel = new JLabel(new ImageIcon(drawOffsetVisitor.getImage()));
       f.add("Center", imagelabel);
       f.pack();
       f.setSize(
           new Dimension(
-              drawVisitor.getImage().getWidth() + 30,
-              drawVisitor.getImage().getHeight() + 40));
+              drawOffsetVisitor.getImage().getWidth() + 30,
+              drawOffsetVisitor.getImage().getHeight() + 40));
       f.setVisible(true);
       f.setResizable(false);
       f.repaint();

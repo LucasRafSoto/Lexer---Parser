@@ -85,6 +85,7 @@ public class DrawVisitor extends ASTVisitor {
     depth++;
     visitKids(t);
     depth--;
+    System.out.println("nCount length: " + nCount.length);
   }
 
   private Graphics2D createGraphics2D(int w, int h) {
@@ -219,12 +220,12 @@ public class DrawVisitor extends ASTVisitor {
   }
 
   public Object visitForAllTree(AST t) {
-    draw("ForAll: ", t);
+    draw("ForAll ", t);
     return null;
   }
 
   public Object visitRangeExpTree(AST t) {
-    draw("RangeExp: ", t);
+    draw("RangeExp ", t);
     return null;
   }
 }

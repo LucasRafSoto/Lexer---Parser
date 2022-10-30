@@ -8,7 +8,6 @@ import java.io.*;
  * maintains the source column position of the character
  */
 public class SourceReader implements IReader {
-    public static final String READ_PREFIX = "READLINE:   ";
 
     private BufferedReader source;
     // line number of source program
@@ -60,7 +59,8 @@ public class SourceReader implements IReader {
             buildPrintFile();
 
             if (nextLine != null) {
-                System.out.println(READ_PREFIX + nextLine);
+                String s = String.format("%3s: " + nextLine, getLineno());
+                System.out.println(s);
             }
 
             isPriorEndLine = false;

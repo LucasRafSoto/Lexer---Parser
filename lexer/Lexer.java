@@ -265,9 +265,7 @@ public class Lexer implements ILexer {
                         number += ch;
                         ch = source.read();
                     } while (Character.isDigit(ch));
-                    if (!(Character.isDigit(ch))) {
-                        errorHandling();
-                    }
+                    return newNumberToken(number, startPosition, endPosition, source.getLineno());
                 }
                 // ScientificLit
                 // "."
@@ -296,7 +294,6 @@ public class Lexer implements ILexer {
                     }
                     // Next up either + or -
                     if (ch != '+' && ch != '-') {
-                        System.out.println("HELLLOOOOOO");
                         errorHandling();
                     } else {
                         endPosition++;

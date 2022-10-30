@@ -13,8 +13,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import ast.AST;
 import compiler.Compiler;
-import visitor.PrintVisitor;
 
 public class OutputTest {
   private final PrintStream standardOut = System.out;
@@ -32,6 +32,7 @@ public class OutputTest {
 
   @Test
   public void testOutput() throws Exception {
+    AST.NodeCount = 0;
     Path temp = Files.createTempFile("fall-2022", ".x");
     String absolutePath = temp.toString();
 
@@ -43,7 +44,7 @@ public class OutputTest {
     compiler.compileProgram();
 
     outputStreamCaptor.flush();
-    String result = outputStreamCaptor.toString();
+    String result = outputStreamCaptor.toString().replace("\r", "");
 
     String[] outputLines = result.split("\n");
     String[] expectLines = EXPECTED_OUTPUT.split("\n");
