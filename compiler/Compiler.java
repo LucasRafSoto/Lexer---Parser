@@ -28,7 +28,7 @@ public class Compiler {
 
   public void compileProgram() {
     try {
-      // System.out.println("---------------TOKENS-------------");
+      System.out.println("---------------TOKENS-------------");
       Parser parser = new Parser(sourceFile);
       AST t = parser.execute();
 
@@ -36,10 +36,10 @@ public class Compiler {
       PrintVisitor pv = new PrintVisitor();
       t.accept(pv);
       /* COMMENT CODE FROM HERE UNTIL THE CATCH CLAUSE WHEN TESTING PARSER */
-      Constrainer con = new Constrainer(t, parser);
-      con.execute();
-      System.out.println("---------------DECORATED AST-------------");
-      t.accept(pv);
+      // Constrainer con = new Constrainer(t, parser);
+      // con.execute();
+      // System.out.println("---------------DECORATED AST-------------");
+      // t.accept(pv);
 
       /* COMMENT CODE FROM HERE UNTIL THE CATCH CLAUSE WHEN TESTING CONSTRAINER */
       // Codegen generator = new Codegen(t);
