@@ -30,7 +30,7 @@ public class DrawOffsetVisitor extends ASTVisitor {
 
         // width = max(nCount) * (nodew + horizSep);
         // height = nCount.length * (nodeh + vertSep);
-        width = max() * (nodew + horizSep);
+        width = (1 + max()) * (nodew + horizSep);
         height = (offsetVisInstance.getMaxDepth()) * (nodeh + vertSep) + padding;
 
         g2 = createGraphics2D();
@@ -44,20 +44,19 @@ public class DrawOffsetVisitor extends ASTVisitor {
                 maximum = offsetVisInstance.getCountAtDepth(i);
             }
         }
-        return maximum;
+        return maximum + 1;
     }
 
     public void draw(String s, AST t) {
         int hstep = nodew + horizSep;
         int vstep = nodeh + vertSep;
 
-        int x = (mapOffsetVisitors.get(t).getOffset() * hstep) + 5;
+        int x = (mapOffsetVisitors.get(t).getOffset() * hstep);
         int y = depth * vstep;
 
-        g2.setColor(Color.black);
+        g2.setColor(Color.BLACK);
         g2.drawOval(x, y, nodew, nodeh);
         g2.setColor(Color.BLACK);
-        g2.setBackground(Color.GREEN);
         g2.drawString(s, x + 10, y + 2 * nodeh / 3);
 
         int startx = x + nodew / 2;
@@ -89,7 +88,7 @@ public class DrawOffsetVisitor extends ASTVisitor {
         }
 
         g2 = bimg.createGraphics();
-        g2.setBackground(Color.WHITE);
+        g2.setBackground(Color.LIGHT_GRAY);
         g2.setRenderingHint(
                 RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);

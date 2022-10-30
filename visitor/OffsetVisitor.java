@@ -26,10 +26,25 @@ public class OffsetVisitor extends ASTVisitor {
             int updateOffset = (calculatedOffsetX + currentOffset);
 
             try {
-                if (updateOffset <= (offset[offsetMap.get(t).getDepth()]) - 2) {
+                if (t.kidCount() > 0 && (updateOffset >= (offset[offsetMap.get(t).getDepth()]) - 2)) {
+                    parentOffset = 0;
+                    for (int i = 1; i <= kids; i++) {
+                        try {
+                            parentOffset += offsetMap.get(t.getKid(i)).getOffset();
+                        } catch (Exception e) {
+                            System.out.println("Error: " + e);
+                        }
+                    }
+                    parentOffset = (parentOffset / t.kidCount());
+                    offsetMap.get(t).setOffset(parentOffset);
+                } else if (updateOffset <= (offset[offsetMap.get(t).getDepth()]) - 2) {
                     offsetMap.get(t).setOffset(offset[offsetMap.get(t).getDepth()]);
+                    offset[offsetMap.get(t).getDepth()] += 2;
+                } else {
+                    offsetMap.get(t).setOffset(updateOffset);
                 }
-                offsetMap.get(t).setOffset(updateOffset);
+                if (offsetMap.containsValue(t)) {
+                }
 
             } catch (Exception e) {
                 System.out.println("Error: " + e);
@@ -44,9 +59,8 @@ public class OffsetVisitor extends ASTVisitor {
                 }
             }
             parentOffset = (parentOffset / t.kidCount());
-
             // for possible shifting
-            if (parentOffset < offset[depth]) {
+            if (parentOffset <= offset[depth]) {
 
                 OffsetInfo info = new OffsetInfo(depth, offset[depth]);
                 offsetMap.put(t, info);
