@@ -43,8 +43,6 @@ public class OffsetVisitor extends ASTVisitor {
                 } else {
                     offsetMap.get(t).setOffset(updateOffset);
                 }
-                if (offsetMap.containsValue(t)) {
-                }
 
             } catch (Exception e) {
                 System.out.println("Error: " + e);
