@@ -5,7 +5,7 @@ Author: Lucas Soto
 
 ## Project Introduction
 
-The parser project builds on my lexer project. We can take the lexically analyled tokens and provide a structure to them with the parser. The parser checks for grammar and builds an abstract syntax tree of all the tokens, which we can then print with the Print Visitor class and create a GUI out of with the Draw Offset Visitor class.
+The parser project builds on my lexer project. We can take the lexically analyzed tokens and provide a structure to them with the parser. The parser checks for grammar and builds an abstract syntax tree of all the tokens, which we can then print with the Print Visitor class and create a GUI out of with the Draw Offset Visitor class.
 
 ## Execution and Development Environment
 
