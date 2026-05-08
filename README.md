@@ -5,7 +5,7 @@ Author: Lucas Soto
 
 ## Project Introduction
 
-The parser project builds on my lexer project. We can take the lexically analyzed tokens and provide a structure to them with the parser. The parser checks for grammar and builds an abstract syntax tree of all the tokens, which we can then print with the Print Visitor class and create a GUI out of with the Draw Offset Visitor class.
+This parser project builds on my previous lexer project. We can take the lexically analyzed tokens and provide a structure to them with the parser. The parser checks for grammar and builds an abstract syntax tree of all the tokens, which we can then print with the Print Visitor class and create a GUI out of with the Draw Offset Visitor class.
 
 ## Execution and Development Environment
 
@@ -37,18 +37,3 @@ OffsetInfo: An object that is used to hold the depth and offset values of the ab
 DrawOffsetVisitor: Takes in an instance of the OffsetVisitor class and from there is able to access the map created by the OffsetVisitor. With that map, it generates a 2d image and assigns x and y values of each ast based on their depth and offset values.
 
 PrintVisitor: Visits all the ast's in a program and prints them according to their structure.
-
-
-## Results and Conclusions
-
-### What I Learned
-
-Through this process I strengthened my understanding of utilizing object and creating instances to create better written code that is separated by tasks. Although, if I used my time more wisely then I could have done that a lot better aswell.
-
-### What I Could Do Better
-
-For this project we had more time than the previous ones, and I wish I had used that time more wisely. I didn't completely crunch, but I wish I had spent more time on the project earlier on so that I could have asked more questions that referred to later problems that I had. It eventually worked out, but I could have optomized and made the code look nicer. Additionally, while my draw offset visitor works, it can run into problems when it has to handle larger files. And my offset visitor also has trouble with larger files. So if I had used my time more wisely I could have gotten around to ironing those things out. 
-
-### Challenges I Encountered
-
-Besides what was mentioned previously with the visitor problems, I also had a big problem with the Output test. I looked through it manually and compared the output of a file copying it, to the expected output and they appear to be the exact same. However, the test always fails and doesn't provide any error message to tell me what exactly is the problem.
