@@ -1,8 +1,6 @@
 ![Open in Codespaces](https://classroom.github.com/assets/open-in-codespaces-abfff4d4e15f9e1bd8274d9a39a0befe03a0632bb0f153d0ec72ff541cedbe34.svg)
 # Lexer & Parser
 
-Author: Lucas Soto
-
 ## Project Introduction
 
 This parser project builds on my previous lexer project. We can take the lexically analyzed tokens and provide a structure to them with the parser. The parser checks for grammar and builds an abstract syntax tree of all the tokens, which we can then print with the Print Visitor class and create a GUI out of with the Draw Offset Visitor class.
